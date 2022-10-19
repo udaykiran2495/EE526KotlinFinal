@@ -1,0 +1,3 @@
+package com.example.ee526kotlinfinal
+
+object SensorsAvailable
