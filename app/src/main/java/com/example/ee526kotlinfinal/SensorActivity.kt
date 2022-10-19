@@ -55,12 +55,27 @@ class SensorActivity : AppCompatActivity(), SensorEventListener {
         // Create the sensor manager
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
-        val sensorMap: Any? = sensorObjectMap[sensorName]
+        var sensorType = Sensor.TYPE_ACCELEROMETER
 
-        val _defaultSensorType: Int  = sensorMap.getValue("defaultSensorType")
+        when (sensorName) {
+            "accelerometer" -> {
+                sensorType = Sensor.TYPE_ACCELEROMETER
+            }
+            "pressure" -> {
+                sensorType = Sensor.TYPE_PRESSURE
+            }
+            "rotation" -> {
+                sensorType = Sensor.TYPE_ROTATION_VECTOR
+            }
+            "proximity" -> {
+                sensorType = Sensor.TYPE_PROXIMITY
+            } else -> {
+                Log.v(TAG, "Error")
+            }
+        }
 
         // Specify the sensor you want to listen to
-        sensorManager.getDefaultSensor(_defaultSensorType)?.also { sensor ->
+        sensorManager.getDefaultSensor(sensorType)?.also { sensor ->
             sensorManager.registerListener(
                 this,
                 sensor,
@@ -97,10 +112,20 @@ class SensorActivity : AppCompatActivity(), SensorEventListener {
         }
 
         if(event?.sensor?.type == Sensor.TYPE_PROXIMITY) {
-
             val distance = event.values[0]
+            accelerometerCard.text = "Distance ${distance}"
+        }
 
-            accelerometerCard.text = "Distance ${distance.toFloat()}"
+        if(event?.sensor?.type == Sensor.TYPE_PRESSURE) {
+            val mbarPressure = event.values[0]
+            accelerometerCard.text = "Pressure ${mbarPressure} mmhg"
+        }
+
+        if(event?.sensor?.type == Sensor.TYPE_ROTATION_VECTOR) {
+            val x = event.values[0]
+            val y = event.values[1]
+            val z= event.values[2]
+            accelerometerCard.text = "Rotationx: ${x} \n RoationY: ${y} \n RotationZ: ${z}"
         }
     }
 

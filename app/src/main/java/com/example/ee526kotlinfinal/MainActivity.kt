@@ -36,6 +36,22 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val pressureSensorBtn = findViewById<Button>(R.id.sensor_pressure)
+
+        pressureSensorBtn.setOnClickListener {
+            val intent = Intent(this, SensorActivity::class.java)
+            intent.putExtra("sensorName", "pressure")
+            startActivity(intent)
+        }
+
+        val rotationSensorBtn = findViewById<Button>(R.id.sensor_rotation)
+
+        rotationSensorBtn.setOnClickListener {
+            val intent = Intent(this, SensorActivity::class.java)
+            intent.putExtra("sensorName", "rotation")
+            startActivity(intent)
+        }
+
 
 
     }
