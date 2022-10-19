@@ -52,6 +52,37 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val gravitySensorBtn = findViewById<Button>(R.id.sensor_gravity)
+
+        gravitySensorBtn.setOnClickListener {
+            val intent = Intent(this, SensorActivity::class.java)
+            intent.putExtra("sensorName", "gravity")
+            startActivity(intent)
+        }
+
+        val gyroscopeSensorBtn = findViewById<Button>(R.id.sensor_gyroscope)
+
+        gyroscopeSensorBtn.setOnClickListener {
+            val intent = Intent(this, SensorActivity::class.java)
+            intent.putExtra("sensorName", "gyroscope")
+            startActivity(intent)
+        }
+
+        val temperatureSensorBtn = findViewById<Button>(R.id.sensor_temperature)
+
+        temperatureSensorBtn.setOnClickListener {
+            val intent = Intent(this, SensorActivity::class.java)
+            intent.putExtra("sensorName", "temperature")
+            startActivity(intent)
+        }
+
+        val lightSensorBtn = findViewById<Button>(R.id.sensor_light)
+
+        lightSensorBtn.setOnClickListener {
+            val intent = Intent(this, SensorActivity::class.java)
+            intent.putExtra("sensorName", "light")
+            startActivity(intent)
+        }
 
 
     }

@@ -67,6 +67,18 @@ class SensorActivity : AppCompatActivity(), SensorEventListener {
             "rotation" -> {
                 sensorType = Sensor.TYPE_ROTATION_VECTOR
             }
+            "gravity" -> {
+                sensorType = Sensor.TYPE_GRAVITY
+            }
+            "gyroscope" -> {
+                sensorType = Sensor.TYPE_GYROSCOPE
+            }
+            "temperature" -> {
+                sensorType = Sensor.TYPE_AMBIENT_TEMPERATURE
+            }
+            "light" -> {
+                sensorType = Sensor.TYPE_LIGHT
+            }
             "proximity" -> {
                 sensorType = Sensor.TYPE_PROXIMITY
             } else -> {
@@ -126,6 +138,28 @@ class SensorActivity : AppCompatActivity(), SensorEventListener {
             val y = event.values[1]
             val z= event.values[2]
             accelerometerCard.text = "Rotationx: ${x} \n RoationY: ${y} \n RotationZ: ${z}"
+        }
+
+        if(event?.sensor?.type == Sensor.TYPE_GRAVITY) {
+            val x = event.values[0]
+            accelerometerCard.text = "Gravity sensor value:  ${x} m/s^2"
+        }
+
+        if(event?.sensor?.type == Sensor.TYPE_GYROSCOPE) {
+            val x = event.values[0]
+            val y = event.values[1]
+            val z = event.values[2]
+            accelerometerCard.text = "Gravity sensor value:  ${x} m/s^2"
+        }
+
+        if(event?.sensor?.type == Sensor.TYPE_AMBIENT_TEMPERATURE) {
+            val x = event.values[0]
+            accelerometerCard.text = "Ambient temp sensor value:  ${x} degree C"
+        }
+
+        if(event?.sensor?.type == Sensor.TYPE_LIGHT) {
+            val x = event.values[0]
+            accelerometerCard.text = "Light sensor value:  ${x} lx"
         }
     }
 
