@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature android:name="android.hardware.camera.any"  />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EE526KotlinFinal"
         tools:targetApi="31">
+        <activity
+            android:name=".PhotoHangerActivity"
+            android:exported="false"
+            android:label="@string/title_activity_photo_hanger"
+            android:theme="@style/Theme.EE526KotlinFinal.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".SensorActivity"
             android:exported="false">

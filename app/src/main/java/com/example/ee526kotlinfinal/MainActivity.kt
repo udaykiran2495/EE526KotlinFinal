@@ -14,11 +14,16 @@ import androidx.appcompat.app.AppCompatDelegate
 
 class MainActivity : AppCompatActivity() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val photoHangerAssistantBtn = findViewById<Button>(R.id.photo_hanger_asst)
+
+        photoHangerAssistantBtn.setOnClickListener {
+            val intent = Intent(this, PhotoHangerActivity::class.java)
+            startActivity(intent)
+        }
 
         val accelerometerBtn = findViewById<Button>(R.id.sensor_accelerometer)
 

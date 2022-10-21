@@ -44,7 +44,7 @@ class SensorActivity : AppCompatActivity(), SensorEventListener {
 
 
         sensorName = intent.getStringExtra("sensorName").toString()
-        Log.v(TAG, "========================== " + sensorName)
+        Log.v(TAG, "========================== $sensorName")
 
         accelerometerCard = findViewById(R.id.tv_square)
 
