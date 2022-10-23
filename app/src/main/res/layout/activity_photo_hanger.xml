@@ -6,43 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".PhotoHangerActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="74dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="28dp"
+
+    <LinearLayout
+        android:layout_width="366dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="52dp"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        <ImageView
+            android:id="@+id/straight_line2"
+            android:layout_width="122dp"
+            android:layout_height="14dp"
+            android:layout_marginTop="100dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="TODO"
+            android:src="@drawable/linesvg" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/camera_layout"
-            android:orientation="vertical">
+        <androidx.camera.view.PreviewView
+            android:id="@+id/preview"
+            android:layout_width="122dp"
+            android:layout_height="284dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.camera.view.PreviewView
-                android:id="@+id/preview"
-                android:layout_width="286dp"
-                android:layout_height="493dp"
-                android:layout_marginStart="64dp"
-                android:layout_marginTop="104dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/straight_line"
+            android:layout_width="122dp"
+            android:layout_height="14dp"
+            android:layout_marginTop="100dp"
+            android:background="@null"
+            android:contentDescription="TODO"
+            android:src="@drawable/linesvg" />
+    </LinearLayout>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="253dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="144dp"
+        android:text="Try to place the horizontal edge of \n between the lines. \n\n Done using inclination calculated throught accelerometer sensor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-
-    </FrameLayout>
-
-
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="214dp"
+        android:layout_height="79dp"
+        android:text="Photo Hanger Assistant"
+        android:textSize="20dp"
+        tools:layout_editor_absoluteX="98dp"
+        tools:layout_editor_absoluteY="32dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.ee526kotlinfinal
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -7,36 +8,21 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 
-private const val TAG = "MyActivity"
-
-val accelerometerMap = mapOf(
-    "name" to "accelerometer",
-    "defaultSensorType" to Sensor.TYPE_ACCELEROMETER,
-)
-
-val proximityMap = mapOf(
-    "name" to "proximity",
-    "defaultSensorType" to Sensor.TYPE_PROXIMITY
-)
-
-val sensorObjectMap = mapOf<String, Any?>(
-    "accelerometer" to accelerometerMap,
-    "proximity" to proximityMap
-)
-
+private const val TAG = "SensorActivity"
 
 class SensorActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
     private lateinit var sensorName: String
 
-    private lateinit var accelerometerCard: TextView
+    private lateinit var resultDisplayCard: TextView
     private lateinit var proximityCard: TextView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,16 +32,31 @@ class SensorActivity : AppCompatActivity(), SensorEventListener {
         sensorName = intent.getStringExtra("sensorName").toString()
         Log.v(TAG, "========================== $sensorName")
 
-        accelerometerCard = findViewById(R.id.tv_square)
+        resultDisplayCard = findViewById(R.id.tv_square)
+        var sensorNameDisplay = findViewById<TextView>(R.id.sensorName)
+
+        sensorNameDisplay.text = sensorName.uppercase()
 
         setUpSensorStuff()
+
     }
+
+
 
     private fun setUpSensorStuff() {
         // Create the sensor manager
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
+
+        val deviceSensors = sensorManager.getSensorList(Sensor.TYPE_ALL)
+
+        for(sensor in deviceSensors) {
+            Log.d("All Sensors", sensor.toString())
+        }
+
+        //default
         var sensorType = Sensor.TYPE_ACCELEROMETER
+
 
         when (sensorName) {
             "accelerometer" -> {
@@ -79,8 +80,8 @@ class SensorActivity : AppCompatActivity(), SensorEventListener {
             "light" -> {
                 sensorType = Sensor.TYPE_LIGHT
             }
-            "proximity" -> {
-                sensorType = Sensor.TYPE_PROXIMITY
+            "magneticField" -> {
+                sensorType = Sensor.TYPE_MAGNETIC_FIELD
             } else -> {
                 Log.v(TAG, "Error")
             }
@@ -97,69 +98,85 @@ class SensorActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onSensorChanged(event: SensorEvent?) {
         // Checks for the sensor we have registered
         if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
             //Log.d("Main", "onSensorChanged: sides ${event.values[0]} front/back ${event.values[1]} ")
 
-            // Sides = Tilting phone left(10) and right(-10)
-            val sides = event.values[0]
+            val Ax = event.values[0]
+            val Ay = event.values[1]
+            val Az = event.values[2]
 
-            // Up/Down = Tilting phone up(10), flat (0), upside-down(-10)
-            val upDown = event.values[1]
-
-            accelerometerCard.apply {
+       /*     resultDisplayCard.apply {
                 rotationX = upDown * 3f
                 rotationY = sides * 3f
                 rotation = -sides
                 translationX = sides * -10
                 translationY = upDown * 10
-            }
+            }*/
 
-            // Changes the colour of the accelerometerCard if it's completely flat
-            val color = if (upDown.toInt() == 0 && sides.toInt() == 0) Color.GREEN else Color.RED
-            accelerometerCard.setBackgroundColor(color)
+            // Changes the colour of the resultDisplayCard if it's completely flat
+     /*       val color = if (upDown.toInt() == 0 && sides.toInt() == 0) Color.GREEN else Color.RED
+            resultDisplayCard.setBackgroundColor(color)*/
 
-            accelerometerCard.text = "up/down ${upDown.toInt()}\nleft/right ${sides.toInt()}"
+            resultDisplayCard.text = "Acceleratation along x-axis: $Ax \n \n" +
+                    "Acceleration along y-axis is $Ay \n \n" +
+                    "Acceleration along z-axis is $Az "
         }
 
-        if(event?.sensor?.type == Sensor.TYPE_PROXIMITY) {
-            val distance = event.values[0]
-            accelerometerCard.text = "Distance ${distance}"
+        if(event?.sensor?.type == Sensor.TYPE_MAGNETIC_FIELD) {
+            val ms = Math.round(event.values[0])
+            val my = Math.round(event.values[1])
+            val mz = Math.round(event.values[2])
+
+            resultDisplayCard.text = "Magnetic field along \n" +
+                    "x-axis: $ms micro Tesla \n\n" +
+                    "y-axis: $my micro Tesla\n\n" +
+                    "z-axis: $mz micro Tesla\n\n"
         }
 
         if(event?.sensor?.type == Sensor.TYPE_PRESSURE) {
             val mbarPressure = event.values[0]
-            accelerometerCard.text = "Pressure ${mbarPressure} mmhg"
+            resultDisplayCard.text = "Pressure $mbarPressure mbar"
         }
 
         if(event?.sensor?.type == Sensor.TYPE_ROTATION_VECTOR) {
             val x = event.values[0]
             val y = event.values[1]
-            val z= event.values[2]
-            accelerometerCard.text = "Rotationx: ${x} \n RoationY: ${y} \n RotationZ: ${z}"
+            val z = event.values[2]
+            val scalarComponent = event.values[3]
+
+            resultDisplayCard.text = "Rotation-X: $x \n\n" +
+                    " Roation-Y: $y \n\n" +
+                    " Rotation-Z: $z \n\n" +
+                    " Scalar Component: $scalarComponent"
         }
 
         if(event?.sensor?.type == Sensor.TYPE_GRAVITY) {
             val x = event.values[0]
-            accelerometerCard.text = "Gravity sensor value:  ${x} m/s^2"
+            resultDisplayCard.text = "Gravity sensor value:  ${x} m/s^2"
         }
 
         if(event?.sensor?.type == Sensor.TYPE_GYROSCOPE) {
             val x = event.values[0]
             val y = event.values[1]
             val z = event.values[2]
-            accelerometerCard.text = "Gravity sensor value:  ${x} m/s^2"
+
+            resultDisplayCard.text = "Rate of rotation around" +
+                    "x-axis:  $x rad/s \n\n " +
+                    "y-axis: $y rad/s \n\n " +
+                    "z-axis: $z rad/s "
         }
 
         if(event?.sensor?.type == Sensor.TYPE_AMBIENT_TEMPERATURE) {
             val x = event.values[0]
-            accelerometerCard.text = "Ambient temp sensor value:  ${x} degree C"
+            resultDisplayCard.text = "Ambient temp sensor value:  ${x} degree C"
         }
 
         if(event?.sensor?.type == Sensor.TYPE_LIGHT) {
             val x = event.values[0]
-            accelerometerCard.text = "Light sensor value:  ${x} lx"
+            resultDisplayCard.text = "Light sensor value:  ${x} lx"
         }
     }
 

@@ -7,22 +7,23 @@
     tools:context=".SensorActivity">
 
     <TextView
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="76dp"
         android:text="Sensor Activity"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_square"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="278dp"
+        android:layout_height="487dp"
         android:layout_centerInParent="true"
-        android:layout_marginStart="88dp"
+        android:layout_marginStart="76dp"
         android:layout_marginTop="228dp"
         android:background="#EF5350"
         android:gravity="center"
@@ -31,6 +32,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/sensorName"
+        android:layout_width="189dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="44dp"
+        android:text="Sensor Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
